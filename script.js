@@ -59,14 +59,27 @@ closeShopBtn.addEventListener("click", () => shopDiv.style.display = "none");
 // ----------------- Board & Theme UI -----------------
 function updateBoardStylesUI(){
     boardStylesDiv.innerHTML = "";
-    const allStyles = ["default","dark","neon","gradient"];
+    const allStyles = [
+        "default",
+        "dark",
+        "neon",
+        "gradient",
+        "calm-blue",      // New style 1
+        "sunset-orange",  // New style 2
+        "forest-green",   // New style 3
+        "steel-gray"      // New style 4
+    ];
     allStyles.forEach(style => {
         const btn = document.createElement("button");
         btn.textContent = style + (boardsOwned.includes(style)?" (Owned)":" (5 pts)");
         btn.addEventListener("click", () => {
             if(!boardsOwned.includes(style)){
-                if(points >= 5){ points -=5; boardsOwned.push(style); applyBoardStyle(style); saveData(); }
-                else alert("Not enough points!");
+                if(points >= 5){ 
+                    points -= 5; 
+                    boardsOwned.push(style); 
+                    applyBoardStyle(style); 
+                    saveData(); 
+                } else alert("Not enough points!");
             } else applyBoardStyle(style);
         });
         boardStylesDiv.appendChild(btn);

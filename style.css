@@ -1,5 +1,5 @@
 body {
-    background: linear-gradient(135deg, #ff6ec4, #7873f5);
+    background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
     font-family: 'Poppins', sans-serif;
     display: flex;
     justify-content: center;
@@ -50,3 +50,22 @@ button { cursor: pointer; font-weight: bold; border: none; border-radius: 5px; t
 #board.dark .cell{background: rgba(0,0,0,0.5);}
 #board.neon .cell{background: rgba(0,255,255,0.2);}
 #board.gradient .cell{background: linear-gradient(135deg,#ff6ec4,#7873f5);}
+/* Calm Blue */
+#board.calm-blue .cell {
+    background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+}
+
+/* Sunset Orange */
+#board.sunset-orange .cell{
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+}
+
+/* Forest Green */
+#board.forest-green .cell{
+    background: linear-gradient(135deg, #a8e6cf, #dcedc1);
+}
+
+/* Steel Gray */
+#board.steel-gray .cell{
+    background: linear-gradient(135deg, #bdc3c7, #2c3e50);
+}
