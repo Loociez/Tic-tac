@@ -2,66 +2,58 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>⚡ L's Arcade ⚡</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tic-Tac-Showdown</title>
 <link rel="stylesheet" href="style.css">
-<script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
 </head>
+
 <body>
-<div class="container">
-    <h1>⚡ Tic-Tac-Showdown ⚡</h1>
+<div class="hub-container">
 
-    <!-- Points & Shop -->
-    <div id="player-stats">
-        Points: <span id="points">0</span>
-        <button id="shop-btn">Shop</button>
+  <h1>⚡ L's Arcade ⚡</h1>
+  <p class="subtitle">One currency. Multiple games. Endless flex.</p>
+
+  <div class="player-bar">
+    Points: <span id="points">0</span>
+  </div>
+
+  <div class="games-grid">
+
+    <!-- Tic Tac Toe -->
+    <div class="game-card">
+      <h2>Tic-Tac-Showdown</h2>
+      <p>Classic rules, modern chaos. Style wins.</p>
+      <button onclick="location.href='tictactoe/index.html'">Play</button>
     </div>
 
-    <!-- Shop -->
-    <div id="shop" style="display:none;">
-        <h2>Shop</h2>
-
-        <div id="board-section">
-            <h3>Board Styles (5 points each):</h3>
-            <div id="board-styles"></div>
-        </div>
-
-        <div id="player-theme-section">
-            <h3>Piece Themes (5 points each):</h3>
-            <div id="player-themes"></div>
-        </div>
-
-        <button id="close-shop">Close Shop</button>
+    <!-- Connect 4 -->
+    <div class="game-card">
+      <h2>Connect 4</h2>
+      <p>Drop smart. Trap harder. First to 4 wins.</p>
+      <button onclick="location.href='connect4/index.html'">Play</button>
     </div>
 
-    <!-- Mode Selection -->
-    <div id="mode-selection">
-        <button id="single-player">Single Player (Bot)</button>
-        <button id="multi-player">Multiplayer</button>
+    <!-- Hex Battle -->
+    <div class="game-card">
+      <h2>Hex Battle</h2>
+      <p>Turn base territory battle</p>
+      <button onclick="location.href='hexbattle/index.html'">Play</button>
+    </div>
+	
+	<!-- Locked -->
+    <div class="game-card locked">
+      <h2>Coming Soon</h2>
+      <p>More games coming soon....</p>
+      <button disabled>Play</button>
     </div>
 
-    <!-- Multiplayer Invite -->
-    <div id="invite" style="display:none;">
-        <input type="text" id="invite-link" readonly>
-        <button id="copy-link">Copy Link</button>
-    </div>
-
-    <!-- Board -->
-    <div id="board" style="display:none;"></div>
-
-    <!-- Status / New Game -->
-    <div id="status"></div>
-    <button id="new-game" style="display:none;">New Game</button>
-
-    <!-- Chat -->
-    <div id="chat-container">
-        <div id="chat" style="height:150px; overflow-y:auto; border:1px solid #ccc; margin:10px 0; padding:5px;"></div>
-        <input type="text" id="chat-input" placeholder="Type message...">
-        <button id="chat-send">Send</button>
-    </div>
+  </div>
 
 </div>
-<canvas id="confetti"></canvas>
-<script src="script.js"></script>
+
+<script>
+  document.getElementById("points").textContent =
+    localStorage.getItem("points") || 0;
+</script>
 </body>
 </html>

@@ -1,0 +1,54 @@
+body {
+  background: linear-gradient(135deg, #1f2933, #111827);
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+#top-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+
+#board {
+  display: grid;
+  grid-template-columns: repeat(7, 80px);
+  gap: 6px;
+  justify-content: center;
+  margin: 20px auto;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.cell {
+  width: 80px;
+  height: 80px;
+  background: #111;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.default { background: #1f2933; }
+.dark { background: #000; }
+.neon { background: radial-gradient(circle, #00ffff, #000); }
+.gradient { background: linear-gradient(45deg, #6366f1, #ec4899); }
+
+.flash {
+  animation: flash 0.6s infinite alternate;
+}
+
+@keyframes flash {
+  from { box-shadow: 0 0 5px white; }
+  to { box-shadow: 0 0 20px white; }
+}
+
+button {
+  padding: 8px 14px;
+  margin: 5px;
+  cursor: pointer;
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hex Battle</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+<script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <h1>🔷 Hex Battle 🔷</h1>
+
+    <div id="top-bar">
+        Points: <span id="points">0</span> |
+        <span id="score">P1: 0 — P2: 0</span><br>
+        <button id="how">How to Play</button>
+        <button id="new-game">New Game</button>
+    </div>
+
+    <div id="mode-select">
+        <button id="single">Single Player</button>
+        <button id="multi">Multiplayer</button>
+    </div>
+
+    <div id="invite" style="display:none;">
+        <input id="invite-link" readonly>
+        <button id="copy">Copy Invite</button>
+    </div>
+
+    <div id="status"></div>
+    <div id="board"></div>
+
+    <div id="shop">
+        <h3>Board Skins</h3>
+        <div id="skins"></div>
+
+        <h3>Glow Styles</h3>
+        <div id="glows"></div>
+    </div>
+</div>
+
+<div id="rules-modal">
+    <div class="modal">
+        <h2>How to Play Hex Battle</h2>
+        <ul>
+            <li>Claim hexes one per turn</li>
+            <li>Each hex = 1 point</li>
+            <li>Adjacent friendly hexes add +1 bonus</li>
+            <li>Placing next to 3+ enemies captures one</li>
+            <li>Highest score when full wins</li>
+        </ul>
+        <button id="close-rules">Got it</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

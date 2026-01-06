@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Connect 4</title>
+<link rel="stylesheet" href="connect4.css">
+<script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+</head>
+
+<body>
+<div id="top-bar">
+  <button id="back-btn" onclick="window.location.href='../index.html'">← Back</button>
+  <span>Points: <span id="points">0</span></span>
+  <button id="shop-btn">Shop</button>
+</div>
+
+<h1>Connect 4</h1>
+
+<div id="mode-selection">
+  <button id="single-player">Single Player</button>
+  <button id="multi-player">Multiplayer</button>
+</div>
+
+<div id="status"></div>
+
+<div id="board"></div>
+
+<button id="new-game" style="display:none;">New Game</button>
+
+<!-- Invite -->
+<div id="invite" style="display:none;">
+  <input id="invite-link" readonly>
+  <button id="copy-link">Copy Invite</button>
+</div>
+
+<!-- Shop (reused logic) -->
+<div id="shop" style="display:none;">
+  <button id="close-shop">Close</button>
+  <h3>Board Styles</h3>
+  <div id="board-styles"></div>
+  <h3>Player Themes</h3>
+  <div id="player-themes"></div>
+</div>
+
+<canvas id="confetti"></canvas>
+
+<script src="connect4.js"></script>
+</body>
+</html>
