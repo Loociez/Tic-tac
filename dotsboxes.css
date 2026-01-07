@@ -1,0 +1,72 @@
+body {
+    font-family: sans-serif;
+    background: #111;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+#db-status, #db-scores {
+    margin: 10px 0;
+}
+
+#db-board {
+    position: relative;
+    margin: 20px;
+    background: #222;
+    border-radius: 10px;
+    padding: 10px;
+    display: inline-block;
+}
+
+.dot {
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.line {
+    position: absolute;
+    background: #555;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.line.h { height: 4px; }
+.line.v { width: 4px; }
+
+.line:hover { box-shadow: 0 0 10px #fff; }
+
+.box {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 24px;
+    color: #fff;
+    text-shadow: 0 0 5px black;
+    border-radius: 5px;
+}
+
+#db-controls button, #db-shop-btn { margin: 5px; }
+
+#db-shop, #db-howto-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: #333;
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 999;
+}
+#db-board-styles button, #db-line-styles button { margin: 3px; }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dots & Boxes</title>
+<link rel="stylesheet" href="dotsboxes.css">
+</head>
+<body>
+    <h1>Dots & Boxes</h1>
+    <div id="db-status">Your move!</div>
+    <div id="db-scores">Score - You: 0 | Friend/AI: 0</div>
+    <div id="db-controls">
+        <button id="db-new-game">New Game</button>
+        <button id="db-single">Single Player</button>
+        <button id="db-multi">Multiplayer</button>
+        <button id="db-shop-btn">Shop</button>
+        <button id="db-howto-btn">How to Play</button>
+    </div>
+    <input type="text" id="db-invite-link" readonly style="width:300px; display:none;">
+    <div id="db-board"></div>
+
+    <!-- Shop modal -->
+    <div id="db-shop">
+        <h2>Shop</h2>
+        <div id="db-board-styles"></div>
+        <div id="db-line-styles"></div>
+        <button id="db-close-shop">Close</button>
+    </div>
+
+    <!-- How to play modal -->
+    <div id="db-howto-modal">
+        <h2>How to Play Dots & Boxes</h2>
+        <p>Click lines between dots to claim them.</p>
+        <p>If you complete a box, you earn points and take another turn.</p>
+        <p>Territories next to each other increase points for strategic play!</p>
+        <button id="db-close-howto">Close</button>
+    </div>
+
+<script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+<script src="dotsboxes.js"></script>
+</body>
+</html>
