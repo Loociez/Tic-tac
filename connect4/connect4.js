@@ -14,6 +14,7 @@ let playerThemesOwned = JSON.parse(localStorage.getItem("playerThemes")) || ["de
 let currentPlayerTheme = localStorage.getItem("currentPlayerTheme") || "default";
 
 let peer, conn;
+let myId = null;
 
 // ----------------- Elements -----------------
 const boardDiv = document.getElementById("board");
@@ -49,8 +50,9 @@ function startGame(mode) {
   gameMode = mode;
   setupBoard();
   newGameBtn.style.display = "none";
-  statusDiv.textContent = "Your move!";
-  isMyTurn = true;
+  currentPlayer = "X";
+  isMyTurn = (mode === "single" || mode === "multi"); // host always starts
+  statusDiv.textContent = currentPlayer + "'s move!";
   if (mode === "multi") setupMultiplayer();
 }
 
@@ -71,9 +73,9 @@ function setupBoard() {
   }
 }
 
+// ----------------- Drop & Make Move -----------------
 function dropPiece(col) {
   if (!isMyTurn) return;
-
   for (let r = ROWS - 1; r >= 0; r--) {
     if (!board[r][col]) {
       makeMove(r, col, currentPlayer, true);
@@ -83,43 +85,47 @@ function dropPiece(col) {
 }
 
 function makeMove(r, c, player, send) {
+  if (board[r][c] !== null) return;
+
   board[r][c] = player;
   renderBoard();
 
   if (checkWin(player)) return;
 
+  // switch player
   currentPlayer = player === "X" ? "O" : "X";
+  statusDiv.textContent = currentPlayer + "'s move!";
 
-  if (send && gameMode === "multi" && conn) {
-    conn.send({ r, c, player });
-    isMyTurn = false;
-  }
-
-  if (gameMode === "single" && player === "X") {
-    isMyTurn = false;
-    setTimeout(botMove, 500);
+  if (send) {
+    if (gameMode === "multi" && conn) {
+      conn.send({ r, c, player });
+      isMyTurn = false; // wait for other player
+    } else if (gameMode === "single" && player === "X") {
+      isMyTurn = false;
+      setTimeout(botMove, 500);
+    }
+  } else {
+    isMyTurn = (gameMode === "single") ? (currentPlayer === "X") : true;
   }
 }
 
-// ----------------- Rendering -----------------
+// ----------------- Render -----------------
 function renderBoard() {
   [...boardDiv.children].forEach((cell, i) => {
     const r = Math.floor(i / COLS);
     const c = i % COLS;
     const v = board[r][c];
-
     if (!v) {
       cell.textContent = "";
       cell.style.color = "";
+      cell.style.textShadow = "";
       return;
     }
-
     let color = v === "X" ? "#fffa00" : "#00fff0";
     if (currentPlayerTheme === "neon") {
       color = v === "X" ? "#ff00ff" : "#00ffff";
       cell.style.textShadow = `0 0 15px ${color}`;
     }
-
     cell.textContent = v;
     cell.style.color = color;
   });
@@ -142,8 +148,8 @@ function checkWin(p) {
           statusDiv.textContent = `${p} wins!`;
           newGameBtn.style.display = "inline-block";
           points++;
-          localStorage.setItem("points", points);
           pointsSpan.textContent = points;
+          localStorage.setItem("points", points);
           return true;
         }
       }
@@ -155,9 +161,8 @@ function checkWin(p) {
 // ----------------- Bot -----------------
 function botMove() {
   let validCols = [];
-  for (let c = 0; c < COLS; c++) {
-    if (board[0][c] === null) validCols.push(c);
-  }
+  for (let c = 0; c < COLS; c++) if (board[0][c] === null) validCols.push(c);
+  if (validCols.length === 0) return;
   const col = validCols[Math.floor(Math.random() * validCols.length)];
   for (let r = ROWS - 1; r >= 0; r--) {
     if (!board[r][col]) {
@@ -172,34 +177,48 @@ function botMove() {
 function setupMultiplayer() {
   document.getElementById("invite").style.display = "block";
   peer = new Peer();
-
+  
   peer.on("open", id => {
+    myId = id;
     inviteInput.value = `${window.location.href}?id=${id}`;
   });
 
   peer.on("connection", c => {
+    if (c.peer === myId) { // prevent self-connect
+      alert("Cannot connect to yourself!");
+      c.close();
+      return;
+    }
     conn = c;
     setupConnection();
   });
 
   const params = new URLSearchParams(window.location.search);
   if (params.has("id")) {
-    conn = peer.connect(params.get("id"));
-    setupConnection();
+    const remoteId = params.get("id");
+    if (remoteId !== myId) {
+      conn = peer.connect(remoteId);
+      setupConnection();
+    }
   }
 
   copyBtn.onclick = () => navigator.clipboard.writeText(inviteInput.value);
 }
 
 function setupConnection() {
-  conn.on("open", () => isMyTurn = true);
+  conn.on("open", () => {
+    // Host (X) starts first
+    isMyTurn = true;
+    statusDiv.textContent = currentPlayer + "'s move!";
+  });
+
   conn.on("data", d => {
     makeMove(d.r, d.c, d.player, false);
-    isMyTurn = true;
+    isMyTurn = true; // allow this player to move
   });
 }
 
-// ----------------- Shop UI (Shared) -----------------
+// ----------------- Shop UI -----------------
 function updateBoardStylesUI() {
   boardStylesDiv.innerHTML = "";
   ["default","dark","neon","gradient"].forEach(s => {
@@ -251,4 +270,5 @@ function resetGame() {
   setupBoard();
   statusDiv.textContent = "Your move!";
   newGameBtn.style.display = "none";
+  isMyTurn = true;
 }
